@@ -1,0 +1,8 @@
+-r common.txt
+pytest==7.1.1
+flake8
+isort==4.3.21
+pytest-django
+mixer
+pytest-cov
+pytest-pythonpath
