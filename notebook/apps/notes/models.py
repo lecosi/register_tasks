@@ -35,3 +35,6 @@ class UserTask(BaseModel):
         on_delete=models.DO_NOTHING,
         related_name='tasks'
     )
+    is_active = models.BooleanField(
+        default=True
+    )

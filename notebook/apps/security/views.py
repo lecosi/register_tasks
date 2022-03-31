@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 
 from .authenticator import JWTAuthenticator
 from .pyjwt import JWTHandler
-from .serializer import InputTokenSerializer, OutTokenSerializer, \
+from .serializers import InputTokenSerializer, OutTokenSerializer, \
     InputSerializer
 from .services import JWTAuthService
 
@@ -16,7 +16,7 @@ class TokenView(APIView):
     output_serializer = OutTokenSerializer
 
     def post(self, request):
-        input_serializer = InputSerializer(data=request.data)
+        input_serializer = self.input_serializer(data=request.data)
         input_serializer.is_valid(raise_exception=True)
         username = input_serializer.validated_data.get('username')
         password = input_serializer.validated_data.get('password')

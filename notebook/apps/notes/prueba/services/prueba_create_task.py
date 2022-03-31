@@ -45,7 +45,7 @@ class TestCreateTask(unittest.TestCase):
                 priority=priority,
                 user_id=(user.pk + 1)
             )
-        assert 'customer not found' in context.exception.detail['msg']
+        assert 'user not found' in context.exception.detail['msg']
 
     def test_when_priority_is_invalid(
         self,
