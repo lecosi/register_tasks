@@ -1,11 +1,10 @@
 import unittest
 
 from mixer.backend.django import mixer
+from notebook.apps.notes.constants import PriorityTask, TaskStatusConstant
+from notebook.apps.notes.models import UserTask
+from notebook.apps.notes.services import TaskService
 from rest_framework.exceptions import ValidationError
-
-from notes.constants import PriorityTask, TaskStatusConstant
-from notes.models import UserTask
-from notes.services import TaskService
 
 
 class TestDeleteTask(unittest.TestCase):

@@ -1,10 +1,9 @@
 import unittest
 
 from mixer.backend.django import mixer
+from notebook.apps.notes.constants import PriorityTask
+from notebook.apps.notes.services import TaskService
 from rest_framework.exceptions import ValidationError
-
-from notes.constants import PriorityTask
-from notes.services import TaskService
 
 
 class TestCreateTask(unittest.TestCase):
