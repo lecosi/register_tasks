@@ -2,6 +2,11 @@
 from rest_framework import serializers
 
 
+class InputSigUpSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+
 class InputTokenSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()

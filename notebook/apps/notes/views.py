@@ -1,3 +1,4 @@
+from apps.notes.pagination import TaskInfoPagination
 from apps.notes.serializers import (
     InputCreateTaskSerializer,
     InputPutTaskSerializer,
@@ -5,16 +6,38 @@ from apps.notes.serializers import (
 )
 from apps.notes.services import UserTaskService
 from rest_framework.response import Response
-from rest_framework.status import HTTP_201_CREATED, HTTP_204_NO_CONTENT
+from rest_framework.status import (
+    HTTP_200_OK,
+    HTTP_201_CREATED,
+    HTTP_204_NO_CONTENT
+)
 from rest_framework.views import APIView
+
+from apps.security.authenticator import JWTAuthenticator
 
 
 class TaskView(APIView):
     user_task_service = UserTaskService()
     input_serializer = InputCreateTaskSerializer
     output_serializer = OutputCreateTaskSerializer
-
     input_put_serializer = InputPutTaskSerializer
+
+    authentication_classes = [JWTAuthenticator]
+    pagination_class = TaskInfoPagination()
+
+    def get(self, request):
+        user = request.user
+        response_data = self.user_task_service.get_task_data(
+            user_id=user.pk
+        )
+        if not response_data:
+            return Response(status=HTTP_200_OK)
+
+        data = self.pagination_class.paginate_queryset(
+            request=request,
+            queryset=response_data
+        )
+        return Response(data, status=HTTP_200_OK)
 
     def post(self, request):
         input_serializer = self.input_serializer(data=request.data)

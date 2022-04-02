@@ -1,8 +1,13 @@
 from django.urls import path
 
-from .views import RefreshTokenView, TokenView
+from .views import RefreshTokenView, TokenView, SignUp
 
 urlpatterns = [
+    path(
+        'signup/',
+        view=SignUp.as_view(),
+        name='auth_signup'
+    ),
     path(
         'login/',
         view=TokenView.as_view(),

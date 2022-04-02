@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Optional, Union
+from typing import Dict, Optional, Union, List, Any
 
 from django.db import transaction
 
@@ -152,6 +152,14 @@ class TaskService(NoteMethod):
                 'msg': 'status is invalid'
             })
 
+    @staticmethod
+    def get_task_data_by_user(
+        user_id: int
+    ) -> 'QuerySet[UserTask]':
+        return note_sel.filter_task_by_user_id(user_id=user_id).values(
+            'id', 'subject', 'description', 'status', 'priority'
+        )
+
 
 class UserTaskService(TaskService):
     def __init__(self):
@@ -209,3 +217,21 @@ class UserTaskService(TaskService):
             task_id=task_id,
             user_id=user_id
         )
+
+    def get_task_data(
+        self,
+        user_id: int
+    ) -> Optional[List[Dict[str, Any]]]:
+        data_list = []
+        task_list = self.get_task_data_by_user(user_id=user_id)
+        for task in task_list:
+            data = {
+                'task_id': task['id'],
+                'subject': task['subject'],
+                'description': task['description'],
+                'status_task': task['status'],
+                'priority': task['priority'],
+            }
+            data_list.append(data)
+
+        return data_list

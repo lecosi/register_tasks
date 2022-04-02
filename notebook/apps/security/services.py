@@ -134,3 +134,28 @@ class JWTAuthService(BaseAuthServices):
             )
             raise PermissionDenied(dict_response)
         return True
+
+
+class UserSignUp:
+
+    @staticmethod
+    def create_user(
+        *,
+        username: str,
+        password: str
+    ):
+        user = auth_sel.get_user_by_username(
+            username=username
+        )
+
+        if user is not None:
+            raise ValidationError({
+                'component': 'SignUp',
+                'msg': 'username already exists'
+            })
+        user = User.objects.create_user(
+            username=username,
+            password=password,
+            is_active=True
+        )
+        return user

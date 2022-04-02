@@ -4,6 +4,11 @@ from .views import TaskView
 
 urlpatterns = [
     path(
+        '',
+        view=TaskView.as_view(),
+        name='get_task_list'
+    ),
+    path(
         'new/',
         view=TaskView.as_view(),
         name='create_task'
