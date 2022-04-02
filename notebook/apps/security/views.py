@@ -2,13 +2,14 @@ from .authenticator import JWTAuthenticator
 from .pyjwt import JWTHandler
 from .serializers import (
     InputSerializer,
+    InputSigUpSerializer,
     InputTokenSerializer,
-    OutTokenSerializer, InputSigUpSerializer
+    OutTokenSerializer
 )
 from .services import JWTAuthService, UserSignUp
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED
+from rest_framework.views import APIView
 
 
 class SignUp(APIView):

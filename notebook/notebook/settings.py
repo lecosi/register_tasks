@@ -1,10 +1,9 @@
-import sys
 from os import environ
-from os.path import abspath, dirname, join, normpath
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = 'django-insecure-b!qu$+temz3ih1r-%dj*snt(&x+fux1*p-a9$0@wtb^*oub5^3'
+SECRET_KEY = 'django-insecure-b!qu$+temz3ih1r-%dj*snt(&x+fux1*p' \
+             '-a9$0@wtb^*oub5^3'
 
 DEBUG = True
 
@@ -66,16 +65,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+                'UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+                'MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+                'CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+                'NumericPasswordValidator',
     },
 ]
 

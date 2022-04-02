@@ -1,5 +1,6 @@
-import pytest
 from django.contrib.auth.models import User
+
+import pytest
 from mixer.backend.django import mixer
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 from rest_framework.test import APIClient

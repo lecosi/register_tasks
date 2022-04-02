@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import RefreshTokenView, TokenView, SignUp
+from .views import RefreshTokenView, SignUp, TokenView
 
 urlpatterns = [
     path(

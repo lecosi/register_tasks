@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Optional, Union, List, Any
+from typing import Any, Dict, List, Optional, Union
 
 from django.db import transaction
 
@@ -155,7 +155,7 @@ class TaskService(NoteMethod):
     @staticmethod
     def get_task_data_by_user(
         user_id: int
-    ) -> 'QuerySet[UserTask]':
+    ) -> List[UserTask]:
         return note_sel.filter_task_by_user_id(user_id=user_id).values(
             'id', 'subject', 'description', 'status', 'priority'
         )

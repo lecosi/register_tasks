@@ -1,11 +1,8 @@
 import pytest
-from mixer.backend.django import mixer
-from rest_framework.status import (
-    HTTP_200_OK
-)
-
 from apps.notes.constants import PriorityTask, TaskStatusConstant
 from apps.notes.models import UserTask
+from mixer.backend.django import mixer
+from rest_framework.status import HTTP_200_OK
 
 
 @pytest.mark.django_db
