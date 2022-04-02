@@ -1,11 +1,13 @@
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
 from .authenticator import JWTAuthenticator
 from .pyjwt import JWTHandler
-from .serializers import InputTokenSerializer, OutTokenSerializer, \
-    InputSerializer
+from .serializers import (
+    InputSerializer,
+    InputTokenSerializer,
+    OutTokenSerializer
+)
 from .services import JWTAuthService
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 class TokenView(APIView):

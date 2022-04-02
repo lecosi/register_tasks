@@ -1,14 +1,14 @@
-import pytest
 from django.contrib.auth.models import User
+
+import pytest
+from apps.security.pyjwt import JWTHandler
+from apps.security.services import JWTAuthService
 from mixer.backend.django import mixer
 from rest_framework.status import (
     HTTP_200_OK,
-    HTTP_403_FORBIDDEN,
-    HTTP_400_BAD_REQUEST
+    HTTP_400_BAD_REQUEST,
+    HTTP_403_FORBIDDEN
 )
-
-from apps.security.pyjwt import JWTHandler
-from apps.security.services import JWTAuthService
 
 
 @pytest.mark.django_db

@@ -1,18 +1,17 @@
-import unittest
-
+import pytest
+from apps.notes.constants import PriorityTask, TaskStatusConstant
+from apps.notes.models import UserTask
+from apps.notes.services import UserTaskService
 from mixer.backend.django import mixer
-from notebook.apps.notes.constants import PriorityTask, TaskStatusConstant
-from notebook.apps.notes.models import UserTask
-from notebook.apps.notes.services import TaskService
 from rest_framework.exceptions import ValidationError
 
 
-class TestUpdateTask(unittest.TestCase):
+class TestUpdateTask:
     def test_update_task_success(
         self,
-        mock_user
+        user_initial
     ):
-        user = mock_user
+        user = user_initial
         task = mixer.blend(
             UserTask,
             subject=mixer.faker.pystr(20),
@@ -26,26 +25,27 @@ class TestUpdateTask(unittest.TestCase):
         priority = PriorityTask.HIGH.value
         status = TaskStatusConstant.IN_PROCESS.value
 
-        task_service = TaskService()
-        task_service.update_task(
+        task_service = UserTaskService()
+        task_service.validate_and_update_task(
             subject=subject,
             description=description,
             priority=priority,
             status=status,
-            task_id=task.pk
+            task_id=task.pk,
+            user_id=user.pk
         )
 
         task = UserTask.objects.get(pk=task.pk)
-        self.assertEqual(task.subject, subject)
-        self.assertEqual(task.description, description)
-        self.assertEqual(task.priority, priority)
-        self.assertEqual(task.status, status)
+        assert task.subject == subject
+        assert task.description == description
+        assert task.priority == priority
+        assert task.status == status
 
     def test_when_task_id_does_not_exists(
         self,
-        mock_user
+        user_initial
     ):
-        user = mock_user
+        user = user_initial
         task = mixer.blend(
             UserTask,
             subject=mixer.faker.pystr(20),
@@ -59,22 +59,28 @@ class TestUpdateTask(unittest.TestCase):
         priority = PriorityTask.HIGH.value
         status = TaskStatusConstant.IN_PROCESS.value
 
-        task_service = TaskService()
-        with self.assertRaises(ValidationError) as context:
-            task_service.update_task(
+        task_service = UserTaskService()
+        with pytest.raises(ValidationError) as e:
+            task_service.validate_and_update_task(
                 subject=subject,
                 description=description,
                 priority=priority,
                 status=status,
-                task_id=(task.pk + 1)
+                task_id=(task.pk + 1),
+                user_id=user.pk
             )
-        assert 'task not found' in context.exception.detail['msg']
+
+        expected_data = {
+            'component': 'task',
+            'msg': 'task not found'
+        }
+        assert e.value.args[0] == expected_data
 
     def test_when_priority_is_invalid(
         self,
-        mock_user
+        user_initial
     ):
-        user = mock_user
+        user = user_initial
         task = mixer.blend(
             UserTask,
             subject=mixer.faker.pystr(20),
@@ -87,22 +93,28 @@ class TestUpdateTask(unittest.TestCase):
         description = mixer.faker.pystr(20)
         status = TaskStatusConstant.IN_PROCESS.value
 
-        task_service = TaskService()
-        with self.assertRaises(ValidationError) as context:
-            task_service.update_task(
+        task_service = UserTaskService()
+        with pytest.raises(ValidationError) as e:
+            task_service.validate_and_update_task(
                 subject=subject,
                 description=description,
                 priority=4,
                 status=status,
-                task_id=task.pk
+                task_id=task.pk,
+                user_id=user.pk
             )
-        assert 'task not found' in context.exception.detail['msg']
+
+        expected_data = {
+            'component': 'task',
+            'msg': 'priority is invalid'
+        }
+        assert e.value.args[0] == expected_data
 
     def test_when_status_task_has_changed(
         self,
-        mock_user
+        user_initial
     ):
-        user = mock_user
+        user = user_initial
         subject = mixer.faker.pystr(20)
         description = mixer.faker.pystr(20)
         priority = PriorityTask.HIGH.value
@@ -115,14 +127,15 @@ class TestUpdateTask(unittest.TestCase):
             status=TaskStatusConstant.CREATED.value,
             user_id=user.pk
         )
-        task_service = TaskService()
-        task_service.update_task(
+        task_service = UserTaskService()
+        task_service.validate_and_update_task(
             subject=subject,
             description=description,
             priority=priority,
             status=status,
-            task_id=task.pk
+            task_id=task.pk,
+            user_id=user.pk
         )
 
         task = UserTask.objects.get(pk=task.pk)
-        self.assertEqual(task.status, status)
+        assert task.status == status

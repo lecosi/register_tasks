@@ -1,11 +1,11 @@
 # Standard Library
 import logging
 
-# Libraries
-import jwt
-
 # Django
 from django.conf import settings
+
+# Libraries
+import jwt
 from rest_framework.exceptions import AuthenticationFailed
 
 logger = logging.getLogger(__name__)

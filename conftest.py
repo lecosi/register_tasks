@@ -1,12 +1,12 @@
 from typing import Tuple
 
-import pytest
 from django.contrib.auth.models import User
-from mixer.backend.django import mixer
-from rest_framework.test import APIClient
 
+import pytest
 from apps.security.pyjwt import JWTHandler
 from apps.security.services import JWTAuthService
+from mixer.backend.django import mixer
+from rest_framework.test import APIClient
 
 
 @pytest.fixture

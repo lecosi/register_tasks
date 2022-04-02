@@ -4,11 +4,11 @@ from typing import Tuple
 
 # Django
 from django.contrib.auth.models import User
-from rest_framework.authentication import BaseAuthentication
-from rest_framework.exceptions import AuthenticationFailed
 
 from .constants import TokenTypes
 from .pyjwt import JWTHandler
+from rest_framework.authentication import BaseAuthentication
+from rest_framework.exceptions import AuthenticationFailed
 
 
 class BaseAuthenticator(ABC):

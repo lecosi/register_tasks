@@ -1,7 +1,7 @@
 import pytest
 from mixer.backend.django import mixer
-from rest_framework.test import APIClient
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
+from rest_framework.test import APIClient
 
 
 @pytest.mark.django_db

@@ -30,7 +30,7 @@ class UserTask(BaseModel):
     priority = models.IntegerField(
         default=PriorityTask.LOW.value
     )
-    user_id = models.ForeignKey(
+    user = models.ForeignKey(
         User,
         on_delete=models.DO_NOTHING,
         related_name='tasks'

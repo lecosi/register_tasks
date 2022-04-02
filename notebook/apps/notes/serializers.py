@@ -1,19 +1,11 @@
 # Django
 from rest_framework import serializers
 
-from .constants import PriorityTask
-
 
 class InputCreateTaskSerializer(serializers.Serializer):
     subject = serializers.CharField()
     description = serializers.CharField()
-    priority = serializers.ChoiceField(
-        choices=[
-            PriorityTask.LOW.value,
-            PriorityTask.MEDIUM.value,
-            PriorityTask.HIGH.value,
-        ]
-    )
+    priority = serializers.IntegerField()
 
 
 class OutputCreateTaskSerializer(serializers.Serializer):
@@ -28,3 +20,10 @@ class OutTokenSerializer(serializers.Serializer):
 
 class InputSerializer(serializers.Serializer):
     refresh_token = serializers.CharField()
+
+
+class InputPutTaskSerializer(serializers.Serializer):
+    subject = serializers.CharField()
+    description = serializers.CharField()
+    status = serializers.IntegerField()
+    priority = serializers.IntegerField()

@@ -1,6 +1,6 @@
 import sys
 from os import environ
-from os.path import dirname, normpath, abspath, join
+from os.path import abspath, dirname, join, normpath
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent

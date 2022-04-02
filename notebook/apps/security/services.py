@@ -1,14 +1,14 @@
 import time
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
-from typing import Dict, Any, Union, Optional
+from typing import Any, Dict, Optional, Union
 
 from django.contrib.auth.models import User
-from rest_framework.exceptions import ValidationError, PermissionDenied
 
+from . import selectors as auth_sel
 from .constants import TokenTypes
 from .pyjwt import JWTHandler
-from . import selectors as auth_sel
+from rest_framework.exceptions import PermissionDenied, ValidationError
 
 
 class BaseAuthServices(ABC):
